@@ -2,7 +2,6 @@
 
 /**
  * Adds microformats2 support to your posts
- *
  */
 class UF2_Post {
 	/**
@@ -19,8 +18,16 @@ class UF2_Post {
 		add_filter( 'date_i18n', array( $this, 'fix_c_time_format' ), 10, 3 );
 	}
 
-	function fix_c_time_format( $date, $format, $timestamp ) {
-		if ( 'c' == $format ) {
+	/**
+	 * Adjust the date format for World Wide Web Consortium
+	 *
+	 * @param string $date      Formatted date string.
+	 * @param string $format    Requested format.
+	 * @param string $timestamp A sum of Unix timestamp and timezone offset in seconds.
+	 * @return string
+	 */
+	public function fix_c_time_format( $date, $format, $timestamp ) {
+		if ( 'c' === $format ) {
 			$date = date_i18n( DATE_W3C, $timestamp );
 		}
 		return $date;
@@ -28,13 +35,16 @@ class UF2_Post {
 
 	/**
 	 * Adds custom classes to the array of post classes.
+	 *
+	 * @param array $classes Array of post classes for a given post.
+	 * @return array
 	 */
 	public static function post_classes( $classes ) {
 		$classes = array_diff( $classes, array( 'hentry' ) );
 		if ( ! is_singular() ) {
-			// Adds a class for microformats v2
+			// Adds a class for microformats v2.
 			$classes[] = 'h-entry';
-			// add hentry to the same tag as h-entry
+			// add hentry to the same tag as h-entry.
 			$classes[] = 'hentry';
 		}
 		return array_unique( $classes );
@@ -42,9 +52,12 @@ class UF2_Post {
 
 	/**
 	 * Adds custom classes to the array of body classes.
+	 *
+	 * @param array $classes Array of classes for the body tag.
+	 * @return array
 	 */
 	public static function body_classes( $classes ) {
-		// Remove hfeed just in case it is added to everything
+		// Remove hfeed just in case it is added to everything.
 		$classes = array_diff( $classes, array( 'hfeed' ) );
 		// Adds a class of hfeed to non-singular pages.
 		if ( ! is_singular() ) {
@@ -59,6 +72,9 @@ class UF2_Post {
 
 	/**
 	 * Adds microformats v2 support to the post title.
+	 *
+	 * @param string $title The title.
+	 * @return string
 	 */
 	public static function the_title( $title ) {
 		if ( ! is_admin() && in_the_loop() ) {
@@ -70,6 +86,9 @@ class UF2_Post {
 
 	/**
 	 * Adds microformats v2 support to the post.
+	 *
+	 * @param string $post Post content.
+	 * @return string
 	 */
 	public static function the_post( $post ) {
 		if ( ! is_admin() ) {
@@ -81,6 +100,9 @@ class UF2_Post {
 
 	/**
 	 * Adds microformats v2 support to the excerpt.
+	 *
+	 * @param string $post Excerpt content.
+	 * @return string
 	 */
 	public static function the_excerpt( $post ) {
 		if ( ! is_admin() ) {

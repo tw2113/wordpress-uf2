@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Adds microformats2 support to media and post formats
- *
+ * Adds microformats2 support to media and post formats.
  */
 class UF2_Media {
 	/**
@@ -15,9 +14,13 @@ class UF2_Media {
 
 	/**
 	 * Adds microformats v2 support to the get_avatar_data() method.
+	 *
+	 * @param array $args        Avatar args.
+	 * @param mixed $id_or_email Gravatar data.
+	 * @return array
 	 */
 	public static function get_avatar_data( $args, $id_or_email ) {
-			// Adds a class for microformats v2
+			// Adds a class for microformats v2.
 		if ( ! isset( $args['class'] ) ) {
 				$args['class'] = array();
 		}
@@ -32,13 +35,21 @@ class UF2_Media {
 			return $args;
 	}
 
-
+	/**
+	 * Filter the wp_get_attachment_image_attributes arguments.
+	 *
+	 * @param array   $attr       Array of image attributes.
+	 * @param WP_Post $attachment Attachment post object.
+	 * @return array
+	 */
 	public static function wp_get_attachment_image_attributes( array $attr, WP_Post $attachment ) {
-		$parents = get_post_ancestors( $attachment );
-		if ( 0 == count( $parents ) ) { // For unattached images
+		$parents       = get_post_ancestors( $attachment );
+		$parents_count = count( $parents );
+
+		if ( 0 === $parents_count ) { // For unattached images.
 			return $attr;
 		}
-		$id = $parents[ count( $parents ) - 1 ];
+		$id = $parents[ $parents_count - 1 ];
 		if ( 'image' !== get_post_format( $id ) ) {
 			return $attr;
 		}

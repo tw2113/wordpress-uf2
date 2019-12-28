@@ -12,20 +12,20 @@
 add_action( 'after_setup_theme', array( 'UF2_Plugin', 'init' ), 99 );
 
 /**
- * Adds Microformats 2 support to your WordPress theme
+ * Adds Microformats 2 support to your WordPress theme.
  *
  * @author Matthias Pfefferle
  */
 class UF2_Plugin {
 	/**
-	 * Initialize plugin
+	 * Initialize plugin.
 	 */
 	public static function init() {
 		self::plugin_textdomain();
 		require_once dirname( __FILE__ ) . '/includes/class-uf2-settings.php';
 		new UF2_Settings();
 
-		// check if theme already supports Microformats 2
+		// check if theme already supports Microformats 2.
 		if ( current_theme_supports( 'microformats2' ) ) {
 			return;
 		}
@@ -58,5 +58,4 @@ class UF2_Plugin {
 		// Note to self, the third argument must not be hardcoded, to account for relocated folders.
 		load_plugin_textdomain( 'wp-uf2', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
-
 }

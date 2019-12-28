@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Enhances Author and Avatar Markup
- *
+ * Enhances Author and Avatar Markup.
  */
 class UF2_Author {
 	/**
@@ -14,6 +13,9 @@ class UF2_Author {
 
 	/**
 	 * Adds microformats v2 support to the author.
+	 *
+	 * @param string $author Author content.
+	 * @return string
 	 */
 	public static function the_author( $author ) {
 		if ( ! is_admin() ) {
